@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 185
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers
+END
+WeiyunAPI.h
+K 25
+svn:wc:ra_dav:version-url
+V 197
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/WeiyunAPI.h
+END
+TencentApiInterface.h
+K 25
+svn:wc:ra_dav:version-url
+V 207
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/TencentApiInterface.h
+END
+QQApiInterface.h
+K 25
+svn:wc:ra_dav:version-url
+V 202
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/QQApiInterface.h
+END
+TencentMessageObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 208
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/TencentMessageObject.h
+END
+WeiBoAPI.h
+K 25
+svn:wc:ra_dav:version-url
+V 196
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/WeiBoAPI.h
+END
+sdkdef.h
+K 25
+svn:wc:ra_dav:version-url
+V 194
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/sdkdef.h
+END
+TencentOAuth.h
+K 25
+svn:wc:ra_dav:version-url
+V 200
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/TencentOAuth.h
+END
+QQApiInterfaceObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 208
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/QQApiInterfaceObject.h
+END
+TencentOAuthObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 206
+/svn/mengjing/!svn/ver/82/MengJingMovie/MengJingMovie/Class/Vendors/umeng_ios_social_sdk_4.2.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/TencentOAuthObject.h
+END

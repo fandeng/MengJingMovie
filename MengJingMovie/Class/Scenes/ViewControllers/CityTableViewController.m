@@ -1,0 +1,215 @@
+//
+//  CityTableViewController.m
+//  Homepage_MengJingMovies
+//
+//  Created by mengjing on 15/10/20.
+//  Copyright (c) 2015年 mengjing. All rights reserved.
+//
+
+#import "CityTableViewController.h"
+#import "ShareRequestData.h"
+#import "CityModel.h"
+#import "HomepageViewController.h"
+#import "FHotCityView.h"
+
+@interface CityTableViewController ()<shareRequestDataDateSource,fHotCityViewDelegate>
+
+@property(nonatomic, strong)NSMutableArray * allCityArray;//存放字典所有的key
+
+@property(nonatomic, strong)CityModel * cityModel;//model对象
+
+@property(nonatomic, strong)NSMutableDictionary * allCityDic;//按照首字母对城市分类
+
+@end
+
+@implementation CityTableViewController
+//懒加载
+- (NSMutableArray *)allCityArray
+{
+    if (_allCityArray == nil) {
+        
+        _allCityArray = [NSMutableArray array];
+    }
+    return _allCityArray;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    //创建单例类 并绑定代理
+    ShareRequestData * handleData = [[ShareRequestData alloc] initWithUrlByString:kCityUrl];
+    
+    handleData.datesource = self;
+    
+    [[ShareRequestData sharedManager] loadProgress:self.view];
+    
+    [self createHeaderView];
+    
+    //改变索引的颜色
+    self.tableView.sectionIndexColor = [UIColor orangeColor];
+    //改变索引选中的背景颜色
+    self.tableView.sectionIndexTrackingBackgroundColor = [UIColor colorWithRed:0.400 green:1.000 blue:1.000 alpha:1.000];
+}
+//返回事件
+- (IBAction)backAction:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+#pragma mark ----实现协议方法
+- (void)shareRequestData:(ShareRequestData *)requestHandle didSucceedWithData:(NSData *)data
+{
+    if (data != nil) {
+        [[ShareRequestData sharedManager] opinionHide:YES];
+        NSMutableDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        self.allCityDic = [NSMutableDictionary dictionary];
+        for (NSDictionary * dict in dic[@"p"]) {
+            
+            self.cityModel = [[CityModel alloc] init];
+            
+            [_cityModel setValuesForKeysWithDictionary:dict];
+            
+            NSString * firstName = [_cityModel.pinyinFull firstCharacterOfString];
+            
+            //判断字典是否有这个key
+            if (_allCityDic[firstName]) {
+                NSMutableArray * array = _allCityDic[firstName];
+                [array addObject:_cityModel];
+                [_allCityDic setValue:array forKey:firstName];
+                
+            } else {
+                NSMutableArray * array = [NSMutableArray array];
+                [array addObject:_cityModel];
+                [_allCityDic setValue:array forKey:firstName];
+            }
+        }
+        [self.allCityArray addObjectsFromArray:_allCityDic.allKeys];//取出所有的key
+        //对key进行排序
+        [_allCityArray sortUsingSelector:@selector(compare:)];
+        
+        [self.tableView reloadData];//刷新视图
+    }
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return _allCityArray.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return [_allCityDic[_allCityArray[section]] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cityCell_id" forIndexPath:indexPath];
+    if (!cell) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cityCell_id"];
+    }
+#pragma mark ---根据key取出value对应的model
+    CityModel * model = _allCityDic[_allCityArray[indexPath.section]][indexPath.row];
+    
+    cell.textLabel.text = model.cityName;
+    
+    return cell;
+}
+//行高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+//索引
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return _allCityArray;
+}
+//分区内容
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return _allCityArray[section];
+}
+//点击cell 触发事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //获取对应的城市
+    CityModel * model = _allCityDic[_allCityArray[indexPath.section]][indexPath.row];
+    //响应通知，将城市的id传到首页
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":[NSString stringWithFormat:@"%ld",model.cityId],@"cityName":[NSString stringWithFormat:@"%@🔽",model.cityName]}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+//设置表头
+- (void)createHeaderView
+{
+    FHotCityView * hotCityView = [[NSBundle mainBundle] loadNibNamed:@"FHotCityView" owner:self options:nil].firstObject;
+    
+    hotCityView.delegate = self;
+    
+    hotCityView.currentCityLable.text = [ShareRequestData sharedManager].city;
+    
+    self.tableView.tableHeaderView = hotCityView;
+}
+#pragma mark ----实现fHotCityViewDelegate协议方法
+- (void)fHotCityViewWithShanghaiAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"292",@"cityName":@"上海🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithBJAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"290",@"cityName":@"北京🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithShenzhenAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"366",@"cityName":@"深圳🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithTianjinAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"293",@"cityName":@"天津🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithChengduAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"880",@"cityName":@"成都🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithChongqingAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"291",@"cityName":@"重庆🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithWuhanAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"561",@"cityName":@"武汉🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithHangzhouAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"974",@"cityName":@"杭州🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fHotCityViewWithGuangzhouAction{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"makeCityId" object:self userInfo:@{@"cityId":@"365",@"cityName":@"广州🔽"}];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+
+
+
+@end

@@ -1,0 +1,319 @@
+//
+//  ImminentMovieTableViewController.m
+//  MovieTime2
+//
+//  Created by lanou3g on 15/10/21.
+//  Copyright (c) 2015年 李超男. All rights reserved.
+//
+
+#import "LImminentMovieTableViewController.h"
+#import "LImminentMovieTableViewCell.h"
+#import "LImminentModel.h"
+
+
+@interface LImminentMovieTableViewController ()
+
+@property(nonatomic,strong)UIView * attentionView;
+@property(nonatomic,strong)UIImageView * imgView;
+@property(nonatomic,strong)UILabel * titleLabel;
+@property(nonatomic,strong)UILabel * peopleLabel;
+@property(nonatomic,strong)UILabel * typeLabel;
+@property(nonatomic,strong)UILabel * actorLabel;
+@property(nonatomic,strong)UIButton * TVButton;
+@property(nonatomic,strong)UIScrollView * scrollView;
+@property(nonatomic,strong)UIPageControl * pageControl;
+@property(nonatomic,strong)UIView * certainView;
+
+@property(nonatomic,strong)LImminentModel * imminentModel;
+@property(nonatomic,strong)LImminentModel * imminentModel2;
+
+@property(nonatomic,strong)NSMutableArray * attentionArray;  // 存放attentionMovie的model
+@property(nonatomic,strong)NSMutableArray * comingMovieArray; // 存放即将放映的电影model
+@property(nonatomic,strong)NSMutableArray * monthArray; // 存放月份的数组
+@property(nonatomic,strong)NSMutableDictionary * monthDic; // 存放月份的字典
+
+
+@end
+
+@implementation LImminentMovieTableViewController
+
+// 懒加载
+- (NSMutableArray *)attentionArray
+{
+    if (_attentionArray == nil) {
+        _attentionArray = [NSMutableArray array];
+    }
+    return _attentionArray;
+}
+
+- (NSMutableArray *)comingMovieArray
+{
+    if (_comingMovieArray == nil) {
+        _comingMovieArray =[NSMutableArray array];
+    }
+    return _comingMovieArray;
+    
+}
+
+- (NSMutableArray *)monthArray
+{
+    if (_monthArray == nil) {
+        _monthArray = [NSMutableArray array];
+    }
+    return _monthArray;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"LImminentMovieTableViewCell" bundle:nil] forCellReuseIdentifier:@"ImminentMovieCell"];
+    
+   
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+
+    [super viewWillAppear:animated];
+     // 调用解析数据的方法
+    [self requestDataWithUrl];
+    
+    [self cycleScrollView];
+
+}
+
+
+
+#pragma mark -----解析数据
+// 解析数据
+- (void)requestDataWithUrl
+{
+    
+    NSURL * url = [NSURL URLWithString:kImminentUrl];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url];
+    __weak LImminentMovieTableViewController * weakSelf = self;
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        weakSelf.monthDic = [NSMutableDictionary dictionary];
+        if (data != nil) {
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            for (NSDictionary * dict in dic[@"attention"]) {
+                weakSelf.imminentModel = [[LImminentModel alloc] init];
+                [_imminentModel setValuesForKeysWithDictionary:dict];
+                [weakSelf.attentionArray addObject:weakSelf.imminentModel];
+                          }
+
+            for (NSDictionary * dict in dic[@"moviecomings"]) {
+                
+                weakSelf.imminentModel2 = [[LImminentModel alloc] init];
+                
+                [_imminentModel2 setValuesForKeysWithDictionary:dict];
+                
+//                [weakSelf.comingMovieArray addObject:_imminentModel2];
+                
+                NSString * month = dict[@"rMonth"];
+                // 判断字典是否有这个key值
+                if (_monthDic[month]) {
+                    NSMutableArray * array = _monthDic[month];
+                    [array addObject:_imminentModel2];
+                    [_monthDic setValue:array forKey:month];
+                    
+                }else{
+                    NSMutableArray * array = [NSMutableArray array];
+                    [array addObject:_imminentModel2];
+                    [_monthDic setValue:array forKey:month];
+                }
+
+<<<<<<< .mine
+                NSLog(@"&&&&&&&&&&%@",_monthArray);
+                NSLog(@"########%@",_imminentModel2);
+=======
+>>>>>>> .r48
+                
+            }
+<<<<<<< .mine
+            NSLog(@"*********%@",_comingMovieArray);
+=======
+>>>>>>> .r48
+            
+            [self.tableView reloadData];// 刷新
+        }
+        
+    }];
+}
+
+
+
+
+#pragma mark - Table view data source
+// 设置多少分区
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return _monthDic.count;
+}
+// 设置cell的个数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return _comingMovieArray.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    LImminentMovieTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImminentMovieCell" forIndexPath:indexPath];
+    
+    LImminentModel * model = _comingMovieArray[indexPath.row];
+    cell.imminentModel = model;
+    
+    
+    return cell;
+}
+// 设置区头高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return  30;
+}
+// 自定义区头
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    LImminentModel * imminentModel = _comingMovieArray[section];
+    label.text = [NSString stringWithFormat:@"%ld",imminentModel.rMonth] ;
+    label.backgroundColor = [UIColor cyanColor];
+//    NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:label.text];
+//    // 设置颜色
+//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,1)];
+    
+//   label.text =
+    return label;
+}
+
+// 轮播图
+- (void)cycleScrollView
+{
+    // tap手势
+    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailAction)];
+    // 创建attentionView
+    self.attentionView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.tableView.frame.size.width, 180)];
+    _attentionView.backgroundColor = [UIColor yellowColor];
+    // 将手势添加到attentionView中
+    [_attentionView addGestureRecognizer:tapGesture];
+    // 调用创建控件的方法
+    [self createSubViewAndLayout];
+    
+    // 创建scrollView
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, _attentionView.frame.size.width, 180)];
+    //    _scrollView.backgroundColor = [UIColor redColor];
+    // 创建pageControl
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(260, 150, 100, 30)];
+    _pageControl.backgroundColor = [UIColor redColor];
+    // 设置未选中圆点的颜色
+    _pageControl.pageIndicatorTintColor = [UIColor grayColor];
+    // 设置当前选中圆点的颜色
+    _pageControl.currentPageIndicatorTintColor = [UIColor cyanColor];
+    
+    CGFloat width = self.scrollView.frame.size.width;
+    CGFloat height = self.scrollView.frame.size.height;
+    
+    
+    for (int i = 0; i < _attentionArray.count; i ++) {
+        self.certainView = [[UIView alloc] init];
+        CGFloat certainX = i * width;
+        CGFloat certainY = 0.f;
+        _certainView.frame = CGRectMake(certainX, certainY, width, height);
+        [self.imgView sd_setImageWithURL:[NSURL URLWithString:_imminentModel.image]];
+        self.titleLabel.text = _imminentModel.title;
+        self.peopleLabel.text = [NSString stringWithFormat:@"%ld",_imminentModel.wantedCount];
+        self.typeLabel.text = _imminentModel.type;
+        self.actorLabel.text = _imminentModel.director;
+        //        self.TVButton = ;
+        
+        //        [self.certainView addSubview:_imgView];
+        //        [_certainView addSubview:_imgView];
+        //        [_certainView addSubview:_titleLabel];
+        //        [_certainView addSubview:_peopleLabel];
+        //        [_certainView addSubview:_typeLabel];
+        //        [_certainView addSubview:_actorLabel];
+        //        [_certainView addSubview:_TVButton];
+        
+        [self.scrollView addSubview:_certainView];
+    }
+    self.scrollView.contentSize = CGSizeMake(_attentionArray.count * width, 0);
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.delegate = self;
+    //  设置总页数
+    self.pageControl.numberOfPages = _attentionArray.count;
+    self.pageControl.currentPage = 1;
+    
+    
+    [_attentionView addSubview:_imgView];
+    [_attentionView addSubview:_titleLabel];
+    [_attentionView addSubview:_peopleLabel];
+    [_attentionView addSubview:_typeLabel];
+    [_attentionView addSubview:_actorLabel];
+    [_attentionView addSubview:_TVButton];
+    
+    
+    [_attentionView addSubview:self.scrollView];
+    [_attentionView addSubview:self.pageControl];
+    
+    [self.tableView setTableHeaderView:_attentionView];
+    
+}
+
+#pragma mark ---- 实现UIScrollViewDelegate中的方法
+// 轮播图scrollView滚动时执行的方法
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGPoint offset = self.scrollView.contentOffset;
+    CGFloat offsetX = offset.x;
+    CGFloat width = self.scrollView.frame.size.width;
+    int pageNum = (offsetX + .5f * width)/width;
+    self.pageControl.currentPage = pageNum;
+    
+    
+}
+
+
+// 创建attentionView上的控件并布局
+- (void)createSubViewAndLayout
+{
+    
+    _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 100, 100)];
+    self.imgView.backgroundColor = [UIColor redColor];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 10, 90, 30)];
+    self.titleLabel.backgroundColor = [UIColor cyanColor];
+    self.peopleLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 45, 15, 30)];
+    self.peopleLabel.backgroundColor = [UIColor purpleColor];
+    self.peopleLabel.text = @"hfjvn";
+    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 80, 60, 30)];
+    self.typeLabel.backgroundColor = [UIColor cyanColor];
+    self.typeLabel.text = @"bvnn";
+    self.actorLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 115, 60, 30)];
+    self.actorLabel.backgroundColor = [UIColor greenColor];
+    self.TVButton = [[UIButton alloc] initWithFrame:CGRectMake(120, 150, 60, 30)];
+    self.TVButton.backgroundColor = [UIColor grayColor];
+    
+    
+    //    [_attentionView addSubview:_imgView];
+    //    [_attentionView addSubview:_titleLabel];
+    //    [_attentionView addSubview:_peopleLabel];
+    //    [_attentionView addSubview:_typeLabel];
+    //    [_attentionView addSubview:_actorLabel];
+    //    [_attentionView addSubview:_TVButton];
+    
+    
+}
+
+
+// attentionView推出电影详情界面
+- (void)pushDetailAction
+{
+
+
+
+
+}
+
+@end

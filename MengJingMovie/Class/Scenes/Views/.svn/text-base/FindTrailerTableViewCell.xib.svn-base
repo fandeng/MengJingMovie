@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="findTrailerCell_id" rowHeight="130" id="KGk-i7-Jjw" customClass="FindTrailerTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36Y-2g-H1M">
+                        <rect key="frame" x="166" y="31" width="196" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQp-OE-R3h">
+                        <rect key="frame" x="166" y="79" width="196" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Tfx-SJ-9BY"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8LF-x4-a0k">
+                        <rect key="frame" x="8" y="25" width="134" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="SUr-Zl-AnJ"/>
+                            <constraint firstAttribute="width" constant="134" id="fED-e2-hNa"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="FindPlay.png" translatesAutoresizingMaskIntoConstraints="NO" id="LUn-lr-JH8">
+                        <rect key="frame" x="49" y="48" width="40" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="lEz-Dx-dfj"/>
+                            <constraint firstAttribute="height" constant="34" id="xFS-AU-p79"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="36Y-2g-H1M" secondAttribute="trailing" constant="20" id="IHV-0G-dJe"/>
+                    <constraint firstItem="LUn-lr-JH8" firstAttribute="centerX" secondItem="8LF-x4-a0k" secondAttribute="centerX" id="Lfr-f7-nw4"/>
+                    <constraint firstItem="LUn-lr-JH8" firstAttribute="centerY" secondItem="8LF-x4-a0k" secondAttribute="centerY" id="NF7-jp-38V"/>
+                    <constraint firstAttribute="trailing" secondItem="VQp-OE-R3h" secondAttribute="trailing" constant="20" id="WSX-To-CQt"/>
+                    <constraint firstItem="VQp-OE-R3h" firstAttribute="top" secondItem="36Y-2g-H1M" secondAttribute="bottom" constant="10" id="ZQY-LM-5Sr"/>
+                    <constraint firstItem="8LF-x4-a0k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ZdS-h2-kdo"/>
+                    <constraint firstItem="36Y-2g-H1M" firstAttribute="leading" secondItem="8LF-x4-a0k" secondAttribute="trailing" constant="20" id="syL-Rt-zf4"/>
+                    <constraint firstAttribute="centerY" secondItem="8LF-x4-a0k" secondAttribute="centerY" id="uEh-DS-LTx"/>
+                    <constraint firstItem="36Y-2g-H1M" firstAttribute="leading" secondItem="VQp-OE-R3h" secondAttribute="leading" id="v0P-Iu-gSU"/>
+                    <constraint firstItem="36Y-2g-H1M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="35" id="wbL-tA-FFO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="findImageView" destination="8LF-x4-a0k" id="dNU-eP-HWZ"/>
+                <outlet property="findTrailerSummary" destination="VQp-OE-R3h" id="xpn-Z2-XlV"/>
+                <outlet property="findTrailermovieName" destination="36Y-2g-H1M" id="GG5-YN-Qsl"/>
+            </connections>
+            <point key="canvasLocation" x="224.5" y="304"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="FindPlay.png" width="122" height="125"/>
+    </resources>
+</document>

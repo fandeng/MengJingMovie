@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TopicView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7L-fm-zZo">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3B-IS-wXZ">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="113.5"/>
+                            <animations/>
+                        </scrollView>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E4P-9O-zK9">
+                            <rect key="frame" x="0.0" y="68.5" width="320" height="70"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="70" id="KZL-D3-gwJ"/>
+                            </constraints>
+                        </scrollView>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0S-BG-CK2">
+                            <rect key="frame" x="0.0" y="138.5" width="320" height="429.5"/>
+                            <animations/>
+                        </scrollView>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="E4P-9O-zK9" firstAttribute="leading" secondItem="o7L-fm-zZo" secondAttribute="leading" id="3Cw-eY-Y0b"/>
+                        <constraint firstItem="F3B-IS-wXZ" firstAttribute="top" secondItem="o7L-fm-zZo" secondAttribute="top" id="8WM-Vn-lSH"/>
+                        <constraint firstItem="E4P-9O-zK9" firstAttribute="top" secondItem="F3B-IS-wXZ" secondAttribute="bottom" constant="-45" id="9ug-yl-7NM"/>
+                        <constraint firstAttribute="bottom" secondItem="Z0S-BG-CK2" secondAttribute="bottom" id="NB8-Wq-36U"/>
+                        <constraint firstAttribute="trailing" secondItem="E4P-9O-zK9" secondAttribute="trailing" id="Xxd-5B-6aa"/>
+                        <constraint firstItem="Z0S-BG-CK2" firstAttribute="top" secondItem="E4P-9O-zK9" secondAttribute="bottom" id="YZt-0e-n0f"/>
+                        <constraint firstItem="Z0S-BG-CK2" firstAttribute="leading" secondItem="o7L-fm-zZo" secondAttribute="leading" id="bLr-Zp-T58"/>
+                        <constraint firstItem="F3B-IS-wXZ" firstAttribute="leading" secondItem="o7L-fm-zZo" secondAttribute="leading" id="c4q-DC-geA"/>
+                        <constraint firstAttribute="height" constant="568" id="eNk-iQ-2MA"/>
+                        <constraint firstAttribute="trailing" secondItem="F3B-IS-wXZ" secondAttribute="trailing" id="hZg-4q-P24"/>
+                        <constraint firstAttribute="height" secondItem="F3B-IS-wXZ" secondAttribute="height" multiplier="5:1" id="iaF-Xz-Sus"/>
+                        <constraint firstAttribute="trailing" secondItem="Z0S-BG-CK2" secondAttribute="trailing" id="mRW-7O-Vpy"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="o7L-fm-zZo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FYP-v8-uep"/>
+                <constraint firstItem="o7L-fm-zZo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="P30-ZP-ENv"/>
+                <constraint firstAttribute="trailing" secondItem="o7L-fm-zZo" secondAttribute="trailing" id="yYn-Rr-VZU"/>
+            </constraints>
+            <connections>
+                <outlet property="bigTopicScroll" destination="Z0S-BG-CK2" id="P0N-QD-hgH"/>
+                <outlet property="smallTopicScroll" destination="E4P-9O-zK9" id="HI4-sI-opg"/>
+                <outlet property="topicScrollView" destination="F3B-IS-wXZ" id="FY7-Gl-XP9"/>
+            </connections>
+            <point key="canvasLocation" x="237" y="241"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

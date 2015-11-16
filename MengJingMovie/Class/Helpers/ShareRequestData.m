@@ -1,0 +1,105 @@
+//
+//  ShareRequestData.m
+//  Homepage_MengJingMovies
+//
+//  Created by mengjing on 15/10/20.
+//  Copyright (c) 2015年 mengjing. All rights reserved.
+//
+
+#import "ShareRequestData.h"
+
+@implementation ShareRequestData
+
+#pragma mark ---实现创建单例类，保证单例的只创建一次
++ (instancetype)sharedManager
+{
+    static ShareRequestData * sharedManager = nil;
+    
+    static dispatch_once_t predicate;
+    
+    dispatch_once(&predicate, ^{
+        
+        sharedManager = [[ShareRequestData alloc] init];
+    });
+    return sharedManager;
+}
+
+#pragma mark ----自定义初始化，请求数据
+- (instancetype)initWithUrlByString:(NSString *)urlString
+{
+    self = [super init];
+    
+    if (self) {
+        NSURL * url = [NSURL URLWithString:urlString];
+        
+        NSURLRequest * request = [NSURLRequest requestWithURL:url cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:10];
+        
+        __weak ShareRequestData * weakSelf = self;
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            
+            if (connectionError == nil) {
+                
+                if ([weakSelf.datesource respondsToSelector:@selector(shareRequestData:didSucceedWithData:)]) {
+                    
+                    [weakSelf.datesource shareRequestData:self didSucceedWithData:data];
+                }
+                if ([weakSelf.delegate respondsToSelector:@selector(shareRequestHandle:data:)]) {
+                    
+                    [weakSelf.delegate shareRequestHandle:self data:data];
+                }
+            } else {
+                
+                CLog(@"%@",connectionError);
+            }
+        }];
+    }
+    return self;
+}
+#pragma mark ---加载效果
+- (void)loadProgress:(UIView *)view
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:view];
+    _hud.frame = view.bounds;
+    _hud.minSize = CGSizeMake(80, 80);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    _hud.labelText = @"正在努力加载中";
+    
+    [view addSubview:_hud];
+    [_hud show:YES];
+}
+//数据出现，隐藏加载效果判断
+- (void)opinionHide:(BOOL)opinion
+{
+    [self.hud hide:opinion];
+}
+//显示提示框
+- (void)showAlertViewWithMessage:(NSString *)messageString number:(NSInteger)num
+{
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:messageString delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    
+    [alertView show];
+    
+    //根据num判断让提示框几秒后自动消失
+    if (num == 0) {
+        [self performSelector:@selector(removeAlertView:) withObject:alertView afterDelay:1.0];
+    }else {
+        [self performSelector:@selector(removeAlertView:) withObject:alertView afterDelay:2.0];
+    }
+    
+}
+//alertView消失
+- (void)removeAlertView:(UIAlertView *)alertView
+{
+    [alertView dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+
+- (void)dealloc
+{
+    _delegate = nil;
+    
+    _datesource = nil;
+}
+
+@end

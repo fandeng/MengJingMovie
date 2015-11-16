@@ -1,0 +1,62 @@
+//
+//  PrefixHeader.pch
+//  MengJingMovie
+//
+//  Created by mengjing on 15/10/22.
+//  Copyright (c) 2015年 mengjing. All rights reserved.
+//
+
+#ifndef MengJingMovie_PrefixHeader_pch
+#define MengJingMovie_PrefixHeader_pch
+
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
+#import "UIImageView+WebCache.h"
+#import "NSString+Characters.h"
+#import "MBProgressHUD.h"
+#import "HomepageUrls.h"
+#import "Urls.h"
+#import "Url.h"
+#import "ShareRequestData.h"
+#import "MJRefresh.h"
+#import "RequestDataTool.h"
+
+
+//============================
+//Find页面的头文件
+#import "FindModel.h"
+#import "WUrl.h"
+
+#import "ShareAnimationLoad.h"
+
+
+
+//============================
+#ifndef TARGET_OS_IOS
+
+#define TARGET_OS_IOS TARGET_OS_IPHONE
+
+#endif
+
+#ifndef TARGET_OS_WATCH
+
+#define TARGET_OS_WATCH 0
+
+#endif
+
+// debug调试状态与release状态判断
+
+#ifdef DEBUG
+
+#define CLog(format, ...) NSLog(format, ## __VA_ARGS__)
+
+#else
+
+#define CLog(format, ...)
+
+#endif
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif

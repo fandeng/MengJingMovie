@@ -1,0 +1,25 @@
+//
+//  DetailsView.h
+//  MengJingMovie
+//
+//  Created by mengjing on 15/10/22.
+//  Copyright (c) 2015年 mengjing. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface DetailsView : UIView
+
+@property (weak, nonatomic) IBOutlet UIImageView *movieImgView;//电影图片
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;//电影标题
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;//副标题
+@property (weak, nonatomic) IBOutlet UILabel *movieTimeLabel;//时长
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;//评分
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;//类型
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;//上映时间
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;//简述
+@property (weak, nonatomic) IBOutlet UILabel *directorLabel;//导演
+@property (weak, nonatomic) IBOutlet UILabel *actorLabel;//主演
+@property (weak, nonatomic) IBOutlet UILabel *actorLabel1;//主演
+
+@end

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--Homepage View Controller-->
+        <scene sceneID="pmT-Gn-Z9E">
+            <objects>
+                <viewController storyboardIdentifier="homepage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OcK-7z-Fio" customClass="HomepageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HLi-ks-cc8"/>
+                        <viewControllerLayoutGuide type="bottom" id="lNq-WS-mgl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BOB-ZO-MXF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kZQ-Wk-pKx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kZQ-Wk-pKx" firstAttribute="top" secondItem="BOB-ZO-MXF" secondAttribute="top" id="fsn-Mj-0TF"/>
+                            <constraint firstAttribute="trailing" secondItem="kZQ-Wk-pKx" secondAttribute="trailing" id="ixR-eH-siK"/>
+                            <constraint firstItem="kZQ-Wk-pKx" firstAttribute="leading" secondItem="BOB-ZO-MXF" secondAttribute="leading" id="yBj-di-qrS"/>
+                            <constraint firstItem="lNq-WS-mgl" firstAttribute="top" secondItem="kZQ-Wk-pKx" secondAttribute="bottom" id="yIO-cd-Fcy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="K6d-kp-KBM">
+                        <barButtonItem key="leftBarButtonItem" title="城市" id="UOi-hf-c89">
+                            <connections>
+                                <action selector="cityCutAction:" destination="OcK-7z-Fio" id="NY7-AA-l4W"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="burger.png" id="XCe-Eh-Ayd">
+                            <connections>
+                                <action selector="setAction:" destination="OcK-7z-Fio" id="w7j-12-ByY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="cityBarButton" destination="UOi-hf-c89" id="SBz-b2-8ke"/>
+                        <outlet property="listTableView" destination="kZQ-Wk-pKx" id="bP5-aJ-Eyw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RfO-k0-OFO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1766.5" y="-876.5"/>
+        </scene>
+        <!--选择城市-->
+        <scene sceneID="9z5-3x-juE">
+            <objects>
+                <tableViewController storyboardIdentifier="city_id" id="CPz-Gt-Kq9" customClass="CityTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="L58-9J-Ckp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cityCell_id" rowHeight="100" id="v03-O8-6Jm">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v03-O8-6Jm" id="65Y-4s-Hqc">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="CPz-Gt-Kq9" id="zRm-ha-ra1"/>
+                            <outlet property="delegate" destination="CPz-Gt-Kq9" id="3HT-eM-4jX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="选择城市" id="fqN-kL-YOV">
+                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="reply" id="FYa-Al-BVN">
+                            <connections>
+                                <action selector="backAction:" destination="CPz-Gt-Kq9" id="Vek-bh-xTL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U6b-sQ-0XT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2238.5" y="-870.5"/>
+        </scene>
+        <!--Movie Details View Controller-->
+        <scene sceneID="fXu-Vg-oC2">
+            <objects>
+                <viewController storyboardIdentifier="fmovieDetail" id="TcW-VJ-3BL" customClass="FMovieDetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U4S-Jt-Ep5"/>
+                        <viewControllerLayoutGuide type="bottom" id="vLb-nj-aiW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="S6J-Dv-IOu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zhO-dz-VeB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vLb-nj-aiW" firstAttribute="top" secondItem="zhO-dz-VeB" secondAttribute="bottom" id="Ahg-rt-Fzh"/>
+                            <constraint firstItem="zhO-dz-VeB" firstAttribute="leading" secondItem="S6J-Dv-IOu" secondAttribute="leading" id="EWn-JD-t5e"/>
+                            <constraint firstAttribute="trailing" secondItem="zhO-dz-VeB" secondAttribute="trailing" id="gfv-ir-nad"/>
+                            <constraint firstItem="zhO-dz-VeB" firstAttribute="top" secondItem="S6J-Dv-IOu" secondAttribute="top" id="vd9-ZA-lAP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="RDK-KI-Xhu">
+                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="xKj-He-zhf">
+                            <connections>
+                                <action selector="backAction:" destination="TcW-VJ-3BL" id="Njb-iU-B1O"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="分享" id="4p3-lf-iNZ">
+                            <connections>
+                                <action selector="shareAction:" destination="TcW-VJ-3BL" id="DYB-QC-Nrq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="commentsTableView" destination="zhO-dz-VeB" id="ceL-tA-G3P"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kU6-vO-gWH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2739.5" y="-870.5"/>
+        </scene>
+        <!--Html Details View Controller-->
+        <scene sceneID="i3f-fU-XQt">
+            <objects>
+                <viewController storyboardIdentifier="htmld" id="K0n-eH-1Jh" customClass="HtmlDetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I6c-5b-YFC"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bdb-Lg-d6C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1Hu-0Z-isF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AU3-2q-tQP">
+                                <rect key="frame" x="0.0" y="-64" width="375" height="731"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bdb-Lg-d6C" firstAttribute="top" secondItem="AU3-2q-tQP" secondAttribute="bottom" id="Kbz-qf-kOo"/>
+                            <constraint firstItem="AU3-2q-tQP" firstAttribute="top" secondItem="1Hu-0Z-isF" secondAttribute="top" constant="-64" id="Orn-6V-ZsI"/>
+                            <constraint firstAttribute="trailing" secondItem="AU3-2q-tQP" secondAttribute="trailing" id="ddj-ST-BKc"/>
+                            <constraint firstItem="AU3-2q-tQP" firstAttribute="leading" secondItem="1Hu-0Z-isF" secondAttribute="leading" id="o1S-Ul-Xh1"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="webView" destination="AU3-2q-tQP" id="gg6-ld-gtN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n95-Ze-0st" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3286.5" y="-864.5"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="burger.png" width="19" height="17"/>
+    </resources>
+</document>

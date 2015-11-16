@@ -1,0 +1,33 @@
+//
+//  HotMovieTableViewCell.h
+//  MovieTime2
+//
+//  Created by lanou3g on 15/10/21.
+//  Copyright (c) 2015年 李超男. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+
+@class LHotModel;
+
+@interface LHotMovieTableViewCell : UITableViewCell
+
+
+@property (weak, nonatomic) IBOutlet UIImageView *pictureView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secondLabel;
+@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cinemaCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *showtimeCountLabel;
+
+// 一写这个Model类就出现警告指针失踪nullability类型说明符(__nonnull或__nullable)
+// 写错了单词，，，，，
+@property(nonatomic,strong)LHotModel * hotmodel;
+
+
+
+
+@end

@@ -1,0 +1,28 @@
+//
+//  FinftopListDetailMovieTableViewCell.h
+//  MengJingMovie
+//
+//  Created by lanou3g on 15/10/24.
+//  Copyright © 2015年 lanou3g. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface FinftopListDetailMovieTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UILabel *findDetailNum;
+@property (weak, nonatomic) IBOutlet UIImageView *fingDetailImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *findDetailname;
+
+@property (weak, nonatomic) IBOutlet UILabel *findDetailName2;
+@property (weak, nonatomic) IBOutlet UILabel *fingDetaolDirector;
+
+@property (weak, nonatomic) IBOutlet UILabel *findDetailActor;
+@property (weak, nonatomic) IBOutlet UILabel *findDetailDate;
+@property (weak, nonatomic) IBOutlet UILabel *finddetailRemark;
+
+- (void)fetchdataWithModel:(FindModel *)model;
+
+
+@end

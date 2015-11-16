@@ -1,0 +1,159 @@
+//
+//  FindReviewDetailViewController.m
+//  MengJingMovie
+//
+//  Created by mengjing on 15/10/23.
+//  Copyright (c) 2015年 mengjing. All rights reserved.
+//
+
+#import "FindReviewDetailViewController.h"
+
+#define TopHeight  256
+@interface FindReviewDetailViewController ()
+
+@property(nonatomic, strong)UIScrollView *scrollView;
+@property(nonatomic, strong)NSString * content;
+
+@property(nonatomic, strong)UILabel * contextLabel;
+
+@property(nonatomic, strong)NSString * urlString;
+
+@end
+
+@implementation FindReviewDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self parserURL];
+    
+    //滚动视图
+   _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 0, 375, self.view.bounds.size.height)];
+  
+    [self.view addSubview:_scrollView];
+
+    //标题
+    UILabel * Title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame)-50, 50)];
+    Title.text = self.DetailModel.title;
+    Title.textAlignment = NSTextAlignmentCenter;
+    [_scrollView addSubview:Title];
+    //图片
+    UIImageView * imageName = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/4, 60, CGRectGetWidth(self.view.frame)/4*2, 200)];
+   
+    [imageName sd_setImageWithURL:[NSURL URLWithString:self.DetailModel.relatedObj[@"image"]]];
+    [_scrollView addSubview:imageName];
+    
+    //内容
+    _contextLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(imageName.frame)+20,CGRectGetWidth(self.view.frame)-40, 0)];
+    _contextLabel.font = [UIFont systemFontOfSize:12.0];
+    _contextLabel.numberOfLines = 0;
+    [_scrollView addSubview:_contextLabel];
+
+    //返回
+    [self TabBarController];
+    [[ShareAnimationLoad ShareAnimation]animationingLoad:self.view];
+
+}
+
+- (void)TabBarController {
+    
+    UIBarButtonItem * LeftBI = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(click:)];
+    self.navigationItem.leftBarButtonItem = LeftBI;
+}
+
+//返回方法
+- (void)click:(UIBarButtonItem *)BI {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+//解析数据
+- (void) parserURL {
+    
+    //self.urlString = [NSString stringWithFormat:@"http://api.m.mtime.cn/Review/Detail.api?reviewId=%ld",self.DetailModel.myId];
+    
+    NSURL * url  = [NSURL URLWithString:kFindReviewDetail((long)self.DetailModel.myId)];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        if (data != nil) {
+            
+            [[ShareAnimationLoad ShareAnimation]animationSuccessLoad];
+            NSMutableDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableContainers) error:nil];
+            
+                self.content = dic[@"content"];
+            
+               [self flattenHTML:self.content];
+        }
+    }];
+    
+}
+//过滤网页标签的方法
+- (NSString *)flattenHTML:(NSString *)html {
+    
+    NSScanner *theScanner;
+    NSString *text = nil;
+    
+    theScanner = [NSScanner scannerWithString:html];
+    
+    while ([theScanner isAtEnd] == NO) {
+        // find start of tag
+        [theScanner scanUpToString:@"<" intoString:NULL] ;
+        // find end of tag
+        [theScanner scanUpToString:@">" intoString:&text] ;
+        // replace the found tag with a space
+        //(you can filter multi-spaces out later if you wish)
+        html = [html stringByReplacingOccurrencesOfString:
+                [NSString stringWithFormat:@"%@>", text]
+                                               withString:@""];
+    } // while //
+    
+    NSRange rang = [html rangeOfString:@"&nbsp;"];
+    if (rang.length == 0) {
+        
+        self.contextLabel.text = html;
+        
+        [self adjustSubviewsWithContent:self.contextLabel.text];
+    }else {
+        
+        self.contextLabel.text = [html stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];
+        
+        [self adjustSubviewsWithContent:self.contextLabel.text];
+    }
+    
+    return html;
+}
+
+//自适应高度
+- (void)adjustSubviewsWithContent:(NSString *)content
+{
+    //计算活动内容的高度
+    CGRect contentRect = [content boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.view.frame)-40, 1000000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0]} context:nil];
+    
+    CGFloat height = TopHeight+contentRect.size.height+30;
+    
+    if (height < self.view.bounds.size.height) {
+        
+        height = self.view.bounds.size.height + 30;
+    }
+    
+    _scrollView.contentSize = CGSizeMake(320, height);
+    
+    
+    
+    CGRect contentViewRect = _contextLabel.frame;
+    
+    contentViewRect.size.height = contentRect.size.height;
+    
+    _contextLabel.frame = contentViewRect;
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

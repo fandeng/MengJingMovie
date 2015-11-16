@@ -1,0 +1,43 @@
+//
+//  ShareRequestData.h
+//  Homepage_MengJingMovies
+//
+//  Created by lanou3g on 15/10/20.
+//  Copyright (c) 2015年 lanou3g. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@class RequestDataTool;
+@protocol requestDataToolDataSource <NSObject>
+
+//数据请求成功，将最外层字典传到控制器
+- (void)requestData:(RequestDataTool *)requestHandle didSucceedWithDic:(NSMutableDictionary *)dic;
+
+//数据请求成功，将最外层数组传到控制器
+- (void)requestData:(RequestDataTool *)requestHandle didSucceedWithArray:(NSMutableArray *)array;
+
+@end
+@protocol requestDataToolDelegate <NSObject>
+
+//数据请求成功，将最外层字典传到控制器
+- (void)requestData:(RequestDataTool *)requestHandle succeedWithDic:(NSMutableDictionary *)dic;
+
+//数据请求成功，将最外层数组传到控制器
+- (void)requestData:(RequestDataTool *)requestHandle succeedWithArray:(NSMutableArray *)array;
+
+@end
+
+@interface RequestDataTool : NSObject
+
+@property(nonatomic, weak)id<requestDataToolDataSource> datesource;
+
+@property(nonatomic, weak)id<requestDataToolDelegate> delegate;
+
+//自定义初始化方法(最外层是字典)
+- (instancetype)initWithUrlByString:(NSString *)urlString;
+
+//自定义初始化方法，请求数据 最外层是数组
+- (instancetype)initWithGetArrayByUrlString:(NSString *)urlString;
+
+@end

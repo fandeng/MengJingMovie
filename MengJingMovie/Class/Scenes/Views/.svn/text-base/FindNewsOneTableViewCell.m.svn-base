@@ -1,0 +1,113 @@
+//
+//  FindNewsOneTableViewCell.m
+//  MengJingMovie
+//
+//  Created by lanou3g on 15/10/22.
+//  Copyright (c) 2015年 lanou3g. All rights reserved.
+//
+
+#import "FindNewsOneTableViewCell.h"
+
+@implementation FindNewsOneTableViewCell
+
+
+- (void)fetchdataWithModel:(FindModel *)model {
+    
+    self.findTitle.text = model.title;
+    self.findTitle2.text = model.title2;
+    [self.findImageView sd_setImageWithURL:[NSURL URLWithString:model.image]];
+    self.findTime.text =  [self changeTimeToStringWithPublishTime:model.publishTime timeStr:nil];
+    self.findCount.text = [NSString stringWithFormat:@"评论:%ld",(long)model.commentCount];
+
+}
+
+
+/**时间转换@“1444444444"格式*/
+- (NSString *)changeTimeToStringWithPublishTime:(NSInteger)publishTime timeStr:(NSString *)timeStr {
+    
+    //    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval sinceNow =[[NSDate date] timeIntervalSince1970] - publishTime+28800;
+    NSString * timeString = @"";
+    if (sinceNow/3600<1) {
+        
+        timeString = [NSString stringWithFormat:@"%f", sinceNow/60];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        int num= [timeString intValue];
+        
+        if (num <= 1) {
+            
+            timeString = [NSString stringWithFormat:@"刚刚..."];
+            return timeString;
+        }else{
+            
+            timeString = [NSString stringWithFormat:@"%@分钟前", timeString];
+            return timeString;
+        }
+    }
+    if (sinceNow/3600>1&&sinceNow/86400<1) {
+        
+        timeString = [NSString stringWithFormat:@"%f", sinceNow/3600];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@小时前", timeString];
+        return timeString;
+    }
+    
+    if (sinceNow/86400>1) {
+        
+        timeString = [NSString stringWithFormat:@"%f", sinceNow/86400];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        int num=[timeString intValue];
+        
+        if (num<2) {
+            
+            timeString=[NSString stringWithFormat:@"昨天"];
+            return timeString;
+        }else if (num==2){
+            
+            timeString = [NSString stringWithFormat:@"前天"];
+            return timeString;
+//        }else{
+//            return [[timeStr componentsSeparatedByString:@" "] firstObject];
+//        }
+        }else if (num>2&&num<7){
+        
+                    timeString = [NSString stringWithFormat:@"%@天前", timeString];
+                    return timeString;
+                }else if (num >= 7 && num <=30) {
+        
+                    timeString = [NSString stringWithFormat:@"1周前"];
+                    return timeString;
+                }else if(num > 30 && num <=365){
+        
+                    int month=sinceNow/(86400*30);
+                    timeString=[NSString stringWithFormat:@"%d",month];
+                    timeString = [NSString stringWithFormat:@"%@周前",timeString];
+                    return timeString;
+                }else if (num >365){
+        
+                    int year=sinceNow/(86400*365);
+                    timeString=[NSString stringWithFormat:@"%d",year];
+                     timeString = [NSString stringWithFormat:@"%@年前",timeString];
+                    return timeString;
+                }
+    }
+    
+    return timeString;
+}
+
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

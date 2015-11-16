@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="findTopListCell_id" rowHeight="98" id="KGk-i7-Jjw" customClass="FindTopListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="98"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fde-Xu-obc">
+                        <rect key="frame" x="35" y="13" width="313" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="y93-Ln-bCj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7n-tO-9pn">
+                        <rect key="frame" x="35" y="60" width="325" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="UYE-eu-Y66"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Fde-Xu-obc" secondAttribute="trailing" constant="20" id="1fi-wI-dG6"/>
+                    <constraint firstItem="Fde-Xu-obc" firstAttribute="leading" secondItem="c7n-tO-9pn" secondAttribute="leading" id="Opq-K0-njP"/>
+                    <constraint firstItem="Fde-Xu-obc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="ZNt-8R-zfc"/>
+                    <constraint firstItem="Fde-Xu-obc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="hJW-Zk-dvG"/>
+                    <constraint firstAttribute="trailing" secondItem="c7n-tO-9pn" secondAttribute="trailing" constant="20" id="j7N-yg-WAi"/>
+                    <constraint firstItem="c7n-tO-9pn" firstAttribute="top" secondItem="Fde-Xu-obc" secondAttribute="bottom" constant="26" id="xKl-Jv-C0a"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="findTopListNameCn" destination="Fde-Xu-obc" id="gka-M2-b9R"/>
+                <outlet property="findTopListsummary" destination="c7n-tO-9pn" id="rYe-VC-VA1"/>
+            </connections>
+            <point key="canvasLocation" x="131.5" y="318"/>
+        </tableViewCell>
+    </objects>
+</document>
